@@ -2,10 +2,11 @@
 pragma solidity ^0.8.20;
 
 import {Script, console} from "forge-std/Script.sol";
-import {DisperseCollect} from "../src/DisperseCollect.sol";
+import {ERC20Mock} from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
+import {Create2} from "@openzeppelin/contracts/utils/Create2.sol";
 
-contract DeployDisperseCollect is Script {
-    DisperseCollect public dc;
+contract DeployMockErc20 is Script {
+    ERC20Mock public token;
 
     function setUp() public {}
 
@@ -17,7 +18,9 @@ contract DeployDisperseCollect is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
-        dc = new DisperseCollect(deployerAddress);
+        token = new ERC20Mock();
+
+        token.mint(deployerAddress, 10000);
 
         vm.stopBroadcast();
     }
